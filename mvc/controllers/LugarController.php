@@ -203,7 +203,7 @@ class LugarController extends Controller{
 		
 	
 	  if( user()->id != $lugar->iduser && !Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR'])) {// autorización(solo propietario) ?
-		 		Session::warning("Si deseas realizar cambios, contacta con el vendedor.");
+		 		Session::warning("Si deseas realizar cambios, contacta con el propietario o administrador.");
 		 	  	return redirect('/Lugar');
 		 }
 			
@@ -367,7 +367,7 @@ class LugarController extends Controller{
 								8000000, 	//tamaño maximo del fichero
 								['image/png','image/jpeg','image/gif','image/webp'] //tipos aceptados
 							)){
-						$lugar->mainpicture=$file->store('../public/'.LUGAR_IMAGE_FOLDER, 'profile_');
+						$lugar->mainpicture=$file->store('../public/'.LUGAR_IMAGE_FOLDER, 'lugar_');
 						
 					} else {
 						if(request()->has('cambiar')){
@@ -427,6 +427,55 @@ class LugarController extends Controller{
 	// redirige a la pantalla de login, de no tener usurios puede crearlo.
 		
 	}
+	
+	/** Elimina la foto del lugar de la base de datos
+	 * @return RedirectResponse
+	 */
+	public function destroyfoto(int $idphoto=0,$retorno=''){
+	    //Usuarios autenticados, verificamos que este loginado, luego ocomprobaremos s i es el propietario
+	    Auth::check();
+	    
+	    // busca la foto con ese ID
+	    $photo = Photo::findOrFail($idphoto,'No se encontró la foto.');
+	    
+	    	    
+	    if( user()->id != $photo->iduser && !Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR'])) {// autorización(solo propietario) ?
+	        Session::warning("Si deseas realizar cambios, contacta con el propietario o administrador.");
+	        return redirect(request()->previousUrl.'#'.$retorno);
+	    }
+	    
+	        
+	       
+	        //intenta borrar el lugar
+	        try{
+	            $photo->deleteObject();
+	            //si hay imagen de la perfil, hay que borrarla
+	            if($photo->file){
+	                File::remove('../public/'.LUGAR_IMAGE_FOLDER.'/'.$photo->file,true);
+	                
+	            }
+	            
+	            Session::success("Se ha borrado la foto '$photo->nam' del lugar. ");
+	            return redirect(request()->previousUrl.'#'.$retorno);
+	            //si se produce un error en la operación con la bdd..
+	        } catch (SQLException $e){
+	            
+	            Session::error("No se pudo borrar el lugar $lugar->name.");
+	            
+	            if(DEBUG)
+	                throw new SQLException($e->getMessage());
+	                
+	                return redirect(request()->previousUrl.'#'.$retorno);
+	        }catch(FileException $e){
+	            Session::warning ("Se eliminó el lugar $lugar->name pero no se pudo eliminar el fichero del disco.");
+	            if(DEBUG)
+	                throw new SQLException($e->getMessage());
+	                //No podemos redirigir al lugar porque ya no existe
+	                //volvemos al listado de lugares
+	                return redirect(request()->previousUrl.'#'.$retorno);
+	        }
+	}
+	
 	
 	/**
 	 * Guarda los datos que llegan del formulario en la bdd

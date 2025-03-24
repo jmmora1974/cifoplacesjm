@@ -165,7 +165,7 @@
 										Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR']))  {
 											// autorización(solo propietario o administradores)	?>
 											
-												<a class="button-danger" onclick="confirmar('borrar',<?= $archfoto->id?>,'seccomentarios')">
+												<a class="button-danger" onclick="confirmar('borrarfoto',<?= $archfoto->id?>,'seccomentarios')">
 													<img src="/images/icons/eliminar.jpg" alt="Eliminar" style="width:20px;height:20px;"></a>
 										<?php }?>
 										
@@ -302,12 +302,16 @@
 		function confirmar(accion,id,retorno=""){
 			if(confirm('Seguro que deseas '+ accion+ '?')){
 				switch (accion){
+					case 'borrarfoto':
+						location.href='/Lugar/destroyfoto/'+id+'/'+retorno;	
+						break;
 					case 'borrar':
 						location.href='/Comentario/destroy/'+id+'/'+retorno;	
 						break;
 					case 'bloquear':
 						location.href='/User/blocked/'+id+'/'+retorno;	
 						break;
+					
 				  default:
  				   throw new Exception ("No se ha indicado la operación");
 				}
