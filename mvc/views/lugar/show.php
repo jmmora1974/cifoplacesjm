@@ -25,7 +25,7 @@
 		
 	<main>
 		<h1>Detalles del <?=$lugar->name?> lugar en <?=APP_NAME?></h1>
-		<section id="detalles" class="flex-container gap2">
+		<section id="detalles" class="flex-container gap1">
 		<script src="/js/BigPicture.js"></script>
 			<div class="centered w100 flex4 ">
 			<figure class="w100 centrado p2" >
@@ -34,7 +34,7 @@
 									 					 		
 				 <figcaption>Foto de  <?= $lugar->name?> </figcaption>
 			</figure>
-			
+			<iframe class="mapa"  src="https://maps.google.com/maps?q=<?=$lugar->location?>&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 			</div>
 			<section class="flex2 centered" id="seccomentarios">
 				<h2><b><?=$lugar->name?></b></h2>
@@ -50,13 +50,15 @@
 					<b>Longitud:</b>  	<?= $lugar->longitude ?></p>
 				<p class="mini">
 					<b>Creado por </b>  	<?= $lugar->username ?> el 	<?= $lugar->created_at ?></p>
-				<?php  if( Login::user()->id == $lugar->iduser || 
+							<?php  if( Login::user()->id == $lugar->iduser || 
 										Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR']))  {
-											// autorización(solo propietario o administradores)	?>
-												<a class="button-danger" href="/lugar/delete/<?= $lugar->id?>">
+										    	// autorización(solo propietario o administradores)	?>
+											<a class="button" href='/lugar/edit/<?=$lugar->id?>'>
+												<img src="/images/icons/edit.png" alt="Editar" style="width:20px;height:20px;"></a>
+											<a class="button-danger" href="/lugar/delete/<?= $lugar->id?>">
 													<img src="/images/icons/eliminar.jpg" alt="Eliminar" style="width:20px;height:20px;"></a>
 										<?php }?>	
-<iframe class="mapa"  src="https://maps.google.com/maps?q=<?=$lugar->location?>&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
 			</section >
 			<h2 class="centered w100">Comentarios de <?=$lugar->name?></h2>
 			<form method="POST" enctype="multipart/form-data"  action="/comentario/store" class="w75" >
@@ -143,7 +145,7 @@
 						foreach ( $fotoslugar as $archfoto ) {
 							$listaidsfotos.=intval($archfoto->id);
 							?>
-								<div class="mySlides  flex-container gap2">
+								<div class="mySlides  flex-container gap1">
 										<div class="flex2">
 										<figure>
 										<img class="enlarge-image" 
@@ -158,13 +160,16 @@
 												<a class="resume" onclick="plusSlides(999999)">&#9654;</a> 
 												<a class="pause" onclick="plusSlides(0)">&#9724;</a>
 												<a class="next" onclick="plusSlides(1)">&#10095;</a>
-												<a class="button"  href="/Lugar/nuevafoto/<?=$lugar->id?>">Nueva foto</a>
+												<a class="button-success"  href="/Lugar/nuevafoto/<?=$lugar->id?>">Nueva foto</a>
 												<?php  if( Login::user()->id == $archfoto->iduser || 
 										Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR']))  {
 											// autorización(solo propietario o administradores)	?>
+											
 												<a class="button-danger" onclick="confirmar('borrar',<?= $archfoto->id?>,'seccomentarios')">
 													<img src="/images/icons/eliminar.jpg" alt="Eliminar" style="width:20px;height:20px;"></a>
-										<?php }?>	
+										<?php }?>
+										
+											
 											</div>	
 											<h3> <?= $f ?> / <?= count($fotoslugar) ?> - <?=$archfoto->name?></h3><br>
 														<?=$archfoto->description?>	
@@ -282,7 +287,7 @@
 			<?php } else { ?>
 					
 					<p>No hay ninguna foto aún. Sube la primera foto de la galeria.</p><br>
-					<a class="button"  href="/Lugar/nuevafoto/<?=$lugar->id?>">Nueva foto</a>
+					<a class="button-success"  href="/Lugar/nuevafoto/<?=$lugar->id?>">Nueva foto</a>	
 				<?php }	?>
 			
 		</section>

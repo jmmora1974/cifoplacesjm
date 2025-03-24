@@ -61,6 +61,7 @@
 			
 		</div>			    			
     		</section>
+    		<script src="/js/BigPicture.js"></script>
     		<section id="secmislugares">
     			<?php if($lugares){ ?>
       		
@@ -79,7 +80,7 @@
        						<th class="centrado">Acciones</th>
 						</tr>
        						
-						<script src="/js/BigPicture.js"></script>
+						
 				<?php foreach($lugares as $lugar){   ?>
 					
 						<tr>

@@ -88,6 +88,7 @@ class Base implements TemplateInterface{
             $html = "
                <div class='derecha'>
                     <a class='button' href='/Login'>LogIn</a>
+                    <a class='button-success' href='/User/create'>Crear cuenta</a>
                </div>";
         }else{
             $user = Login::user(); // recupera el usuario identificado
@@ -108,8 +109,10 @@ class Base implements TemplateInterface{
             $html .= "  <img class='xx-small middle my1' src='/images/users/".($user->picture ?? DEFAULT_USER_IMAGE)."' alt='Imagen de perfil'>
                         <a class='button' href='/Logout'>LogOut</a>
                      </div>";
-
+            
         }
+       
+    				
         return $html;
     }
         

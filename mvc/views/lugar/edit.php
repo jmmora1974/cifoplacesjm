@@ -48,13 +48,13 @@
 			<input name="location" value="<?= $lugar->location?>">
 			<br>
 			<label for="latitude">Latitud:</label>
-			<input type="int"  name="latitude" value="<?=$lugar->latitude?>">
+			<input type="number"  name="latitude" step="0.1" value="<?=$lugar->latitude?>">
 			<br>
 			<label for="longitude">Longitud:</label>
-			<input type="int"  name="longitude" value="<?=$lugar->longitude?>">
+			<input type="number"  name="longitude" step="0.1" value="<?=$lugar->longitude?>">
 			<br>
 			<!--  Si se quiere realizar alguna modificación, podemos usar este campo -->
-			<p for="created_at" class="x-small">Creado el <?=$lugar->created_at?></p>
+			<p class="x-small">Creado el <?=$lugar->created_at?></p>
 			
 			<br>
 	<?php } else{ ?>

@@ -99,7 +99,7 @@
 						<td><?=$lugar->type?></td>
 						<td><?=$lugar->description?></td>
 						<td><?=$lugar->location?></td>
-						<td><?=$lugar->username ?></td>
+						<td><?=$lugar->username ?? 'Anónimo'?></td>
 						<td><?=$lugar->created_at?></td>
 						<td class="centrado">
 							<a class="button" href='/lugar/show/<?=$lugar->id?>'>

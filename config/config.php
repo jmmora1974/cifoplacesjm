@@ -171,7 +171,7 @@ define('DEFAULT_LUGAR_IMAGE', 'default.png');
  * LOGIN
  * -------------------------------------------------------------*/
 
-define('REDIRECT_AFTER_LOGIN', '/');                // Redirección tras login.
+define('REDIRECT_AFTER_LOGIN', '/User/home');                // Redirección tras login.
 
 define('LOG_LOGIN_ERRORS', false);                 // Guardar errores de login en fichero de log.
 define('LOGIN_ERRORS_FILE', '../logs/login.log');  // Nombre del fichero para los errores de login.

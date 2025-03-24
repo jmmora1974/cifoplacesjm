@@ -168,7 +168,7 @@ class LugarController extends Controller{
     				return redirect (request()->previousUrl);
     			}catch(SQLException $e){
 					//prepara el mensaje de error
-					$mensaje = "No se pudo guardar el lugar $lugar->titulo.";
+					$mensaje = "No se pudo guardar el lugar $lugar->name.";
 					
 					if(str_contains($e->errorMessage(),'Duplicate entry'))
 							$mensaje.="<br>Ya existe un lugar con ese <b>ID</b>.";
@@ -251,7 +251,7 @@ class LugarController extends Controller{
 			
 				$lugar= Lugar::create((array)$phototemp,$id);
 				
-				Session::success("Actualización del lugar $lugar->titulo correcta.");
+				Session::success("Actualización del lugar $lugar->name correcta.");
 				return redirect("/Lugar");
 				
 			// Si se produce un error al guardar el lugar..
@@ -314,19 +314,19 @@ class LugarController extends Controller{
 					
 					}
 						
-					Session::success("Se ha borrado el lugar $lugar->titulo.");
+					Session::success("Se ha borrado el lugar $lugar->name.");
 					return redirect("/Lugar/list");
 				//si se produce un error en la operación con la bdd..
 				} catch (SQLException $e){
 					
-					Session::error("No se pudo borrar el lugar $lugar->titulo.");
+					Session::error("No se pudo borrar el lugar $lugar->name.");
 					
 					if(DEBUG)
 						throw new SQLException($e->getMessage());
 						
 						return redirect("/Lugar/delete/$id");
 				}catch(FileException $e){
-					Session::warning ("Se eliminó el lugar $lugar->titulo pero no se pudo eliminar el fichero del disco.");
+					Session::warning ("Se eliminó el lugar $lugar->name pero no se pudo eliminar el fichero del disco.");
 					if(DEBUG)
 						throw new SQLException($e->getMessage());
 						//No podemos redirigir al lugar porque ya no existe
@@ -377,7 +377,7 @@ class LugarController extends Controller{
 					}
 					//$lugar->saneate(); //sanea las entradas.
 					$lugar->update();
-					Session::success("Se ha sustituido o eliminado la foto del lugar de $lugar->titulo correctamente.");
+					Session::success("Se ha sustituido o eliminado la foto del lugar de $lugar->name correctamente.");
 					
 					//si ya existia la foto, tratara de eliminarla primero
 					if($tmp)
