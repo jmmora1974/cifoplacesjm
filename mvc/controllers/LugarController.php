@@ -367,7 +367,7 @@ class LugarController extends Controller{
 								8000000, 	//tamaño maximo del fichero
 								['image/png','image/jpeg','image/gif','image/webp'] //tipos aceptados
 							)){
-						$lugar->mainpicture=$file->store('../public/'.LUGAR_IMAGE_FOLDER, 'profile_');
+						$lugar->mainpicture=$file->store('../public/'.LUGAR_IMAGE_FOLDER, 'place_');
 						
 					} else {
 						if(request()->has('cambiar')){

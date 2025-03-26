@@ -62,6 +62,7 @@
 		</div>			    			
     		</section>
     		<script src="/js/BigPicture.js"></script>
+    		
     		<section id="secmislugares">
     			<?php if($lugares){ ?>
       		

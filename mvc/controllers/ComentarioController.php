@@ -194,6 +194,7 @@ class ComentarioController extends Controller{
 	 * @return ViewResponse
 	 */
 	public function delete(int $id=0){
+	    
 		if(Login::user()->id == $id || Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR' ])) {// autorización(solo ppropietario o moderadors)
 		
 			$comentario = Comentario::findOrFail($id, "No existe el comentario.");

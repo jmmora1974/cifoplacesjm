@@ -308,6 +308,9 @@
 					case 'bloquear':
 						location.href='/User/blocked/'+id+'/'+retorno;	
 						break;
+					case 'borrarfoto':
+						location.href='/Lugar/delete/'+id+'/'+retorno;	
+						break;
 				  default:
  				   throw new Exception ("No se ha indicado la operación");
 				}
