@@ -278,7 +278,7 @@ class LugarController extends Controller{
 	 * 
 	 * @return ViewResponse
 	 */	
-	public function delete(int $id=0){
+	public function delete(int $id=0, $retorno=''){
 		
 			//Buscamos el lugar
 			$lugar = Lugar::findOrFail($id, "No existe el lugar.");

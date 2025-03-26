@@ -58,8 +58,10 @@
 											<a class="button-danger" href="/lugar/delete/<?= $lugar->id?>">
 													<img src="/images/icons/eliminar.jpg" alt="Eliminar" style="width:20px;height:20px;"></a>
 										<?php }?>	
-
 			</section >
+
+<!-- -----------------------------  COMENTARIOS   LUGAR     ------------------------ -->
+			
 			<h2 class="centered w100">Comentarios de <?=$lugar->name?></h2>
 			<form method="POST" enctype="multipart/form-data"  action="/comentario/store" class="w75" >
 					<input type="hidden" name="iduser" value="<?= user()->id ?>">
@@ -75,10 +77,10 @@
 							<label class="small">Solo usuarios registrados.</label>
 							<?php } ?>
 				</form>
+			
 			<section  class="flex-container w100">
 			
-				
-			<?php if($lugarcomments){ ?>
+		<?php if($lugarcomments){ ?>
       			
        		 <div id="comentarioslugar" class="flex2 w100 m0 p0" >
 				<?php foreach($lugarcomments as $comentario){   ?>
@@ -124,6 +126,7 @@
 			<a class="button" onclick="history.back()">Atrás</a> 
 					<a class="button" href="/Lugar/list">Lista de lugares</a> 
 					
+				
 		<!-- Solo el usuario propietario puede realizar las siguientes operaciones-->
 		<?php  if( Login::user()->id == $lugar->iduser || Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR'])) {// autorización(solo propietario) ?>
 				<a class="button" href="/Lugar/edit/<?=$lugar->id?>">Editar</a>
@@ -131,6 +134,9 @@
 			<?php }?>
 		</div>
 		
+					
+			<!-- ----------------------------- CARRUSEL  FOTOS   LUGAR     ------------------------ -->
+				
 		<section id="secphotos">
 				<h3 class="centered">Fotos de <?=$lugar->name?></h3>
 			<section id="seccarrousel" >
@@ -160,12 +166,12 @@
 												<a class="resume" onclick="plusSlides(999999)">&#9654;</a> 
 												<a class="pause" onclick="plusSlides(0)">&#9724;</a>
 												<a class="next" onclick="plusSlides(1)">&#10095;</a>
-												<a class="button-success"  href="/Lugar/nuevafoto/<?=$lugar->id?>">Nueva foto</a>
+												<a class="button-success"  href="/Lugar/nuevafoto/<?=$archfoto->id?>">Nueva foto</a>
 												<?php  if( Login::user()->id == $archfoto->iduser || 
 										Login::oneRole(['ROLE_ADMIN','ROLE_MODERADOR']))  {
 											// autorización(solo propietario o administradores)	?>
 											
-												<a class="button-danger" onclick="confirmar('borrar',<?= $archfoto->id?>,'seccomentarios')">
+												<a class="button-danger" onclick="confirmar('borrarfoto',<?= $archfoto->id?>,'#seccomentarios')">
 													<img src="/images/icons/eliminar.jpg" alt="Eliminar" style="width:20px;height:20px;"></a>
 										<?php }?>
 										
@@ -182,7 +188,7 @@
 									
 									<form method="POST" enctype="multipart/form-data"  action="/comentario/store" class="w100" >
 											<input type="hidden" name="iduser" value="<?= user()->id ?>">
-											<input type="hidden" name="idplace" value="<?=NULL?>">
+											<input type="hidden" name="idplace" value="<?=$lugar->id?>">
 											<input type="hidden" name="idphoto" value="<?= $archfoto->id ?>">
 											<input type="hidden" name="retorno" value="#seccarrousel">
 					
@@ -302,15 +308,16 @@
 		function confirmar(accion,id,retorno=""){
 			if(confirm('Seguro que deseas '+ accion+ '?')){
 				switch (accion){
+					case 'borrarfoto':
+						location.href='/Lugar/delete/'+id+'/'+retorno;	
+						break;
 					case 'borrar':
 						location.href='/Comentario/destroy/'+id+'/'+retorno;	
 						break;
 					case 'bloquear':
 						location.href='/User/blocked/'+id+'/'+retorno;	
 						break;
-					case 'borrarfoto':
-						location.href='/Lugar/delete/'+id+'/'+retorno;	
-						break;
+					
 				  default:
  				   throw new Exception ("No se ha indicado la operación");
 				}
